@@ -323,41 +323,14 @@
                             class="font-label-caps text-label-caps text-silver-matte hover:text-on-surface px-6 py-2 transition-colors"></button>
                     </div>
                 </div>
-                <!-- Lightbox Modal -->
-                <div id="lightbox"
-                    class="fixed inset-0 z-[200] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300"
-                    style="background: rgba(10,10,11,0.92); backdrop-filter: blur(20px);">
-                    <button id="lb-close"
-                        class="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-all duration-200 hover:scale-110 z-10">
-                        <span class="material-symbols-outlined text-2xl">close</span>
-                    </button>
-                    <button id="lb-prev"
-                        class="absolute left-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-all duration-200 hover:scale-110 z-10">
-                        <span class="material-symbols-outlined text-2xl">chevron_left</span>
-                    </button>
-                    <div class="relative flex flex-col items-center max-w-4xl w-full px-24">
-                        <img id="lb-img" src="" alt=""
-                            class="max-h-[80vh] max-w-full object-contain rounded-2xl shadow-2xl transition-opacity duration-200" />
-                        <div class="mt-6 text-center">
-                            <span id="lb-category"
-                                class="font-label-caps text-label-caps text-primary tracking-widest uppercase block mb-1"></span>
-                            <h3 id="lb-title" class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">
-                            </h3>
-                        </div>
-                        <div class="flex gap-2 mt-6" id="lb-dots"></div>
-                    </div>
-                    <button id="lb-next"
-                        class="absolute right-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-all duration-200 hover:scale-110 z-10">
-                        <span class="material-symbols-outlined text-2xl">chevron_right</span>
-                    </button>
-                </div>
+
 
                 <div class="grid grid-cols-12 gap-gutter">
                     <!-- Card 1 -->
                     <div class="col-span-12 lg:col-span-8 group relative rounded-2xl overflow-hidden glass-card reveal portfolio-card cursor-pointer"
                         data-src="portfolio-aalam-care.jpeg" data-title="Care Crafted With Respect"
                         data-category="Featured Campaign" data-index="0">
-                        <div class="aspect-square relative overflow-hidden">
+                        <div class="aspect-square lg:aspect-[4/3] relative overflow-hidden">
                             <img class="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-1000 ease-out"
                                 alt="Aalam Senior Living - Care Crafted With Respect" src="portfolio-aalam-care.jpeg" />
                             <div
@@ -425,7 +398,7 @@
                     <div class="col-span-12 lg:col-span-8 group relative rounded-2xl overflow-hidden glass-card reveal portfolio-card cursor-pointer"
                         data-delay="0.1" data-src="portfolio-aalam-booking.jpeg" data-title="Booking Launch Offer"
                         data-category="Promo Campaign" data-index="3">
-                        <div class="aspect-square relative overflow-hidden">
+                        <div class="aspect-square lg:aspect-[4/3] relative overflow-hidden">
                             <img class="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-1000 ease-out"
                                 alt="Aalam Senior Living - Free Gold Offer" src="portfolio-aalam-booking.jpeg" />
                             <div
@@ -609,6 +582,135 @@
                     class="material-symbols-outlined text-silver-matte hover:text-primary transition-colors cursor-pointer">arrow_upward</button>
             </div>
         </footer>
+
+        <!-- Lightbox Modal (at body level to avoid stacking-context issues) -->
+        <div id="lightbox" style="
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10,10,11,0.95);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        ">
+            <!-- Close -->
+            <button id="lb-close" style="
+                position: absolute;
+                top: 16px;
+                right: 16px;
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.12);
+                border: 1px solid rgba(255,255,255,0.2);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background 0.2s;
+                z-index: 10;
+            ">
+                <span class="material-symbols-outlined" style="font-size:22px;">close</span>
+            </button>
+            <!-- Prev -->
+            <button id="lb-prev" style="
+                position: absolute;
+                left: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.12);
+                border: 1px solid rgba(255,255,255,0.2);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background 0.2s;
+                z-index: 10;
+            ">
+                <span class="material-symbols-outlined" style="font-size:22px;">chevron_left</span>
+            </button>
+            <!-- Content -->
+            <div style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                max-width: 860px;
+                padding: 60px 72px;
+                box-sizing: border-box;
+            ">
+                <img id="lb-img" src="" alt="" style="
+                    max-height: 75vh;
+                    max-width: 100%;
+                    width: auto;
+                    height: auto;
+                    object-fit: contain;
+                    border-radius: 16px;
+                    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+                    transition: opacity 0.2s ease;
+                    display: block;
+                " />
+                <div style="margin-top:24px; text-align:center;">
+                    <span id="lb-category" class="font-label-caps text-label-caps" style="
+                        color:#aac7ff;
+                        text-transform:uppercase;
+                        letter-spacing:0.1em;
+                        font-size:12px;
+                        display:block;
+                        margin-bottom:6px;
+                    "></span>
+                    <h3 id="lb-title" style="
+                        color:#e2e2e2;
+                        font-size:clamp(20px, 4vw, 32px);
+                        font-weight:600;
+                        font-family:'Inter',sans-serif;
+                        margin:0;
+                    "></h3>
+                </div>
+                <div id="lb-dots" style="display:flex; gap:8px; margin-top:20px;"></div>
+            </div>
+            <!-- Next -->
+            <button id="lb-next" style="
+                position: absolute;
+                right: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.12);
+                border: 1px solid rgba(255,255,255,0.2);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background 0.2s;
+                z-index: 10;
+            ">
+                <span class="material-symbols-outlined" style="font-size:22px;">chevron_right</span>
+            </button>
+        </div>
+
+        <!-- Lightbox responsive overrides for mobile -->
+        <style>
+            @media (max-width: 640px) {
+                #lightbox > div { padding: 60px 16px 16px !important; }
+                #lb-prev { left: 4px !important; width: 36px !important; height: 36px !important; }
+                #lb-next { right: 4px !important; width: 36px !important; height: 36px !important; }
+                #lb-img  { max-height: 60vh !important; border-radius: 10px !important; }
+            }
+        </style>
 
         <!-- Lightbox Script -->
         <script>
