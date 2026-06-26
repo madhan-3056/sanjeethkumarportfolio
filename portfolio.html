@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1.0" name="viewport" />
+    <title>CREATOR_STUDIO | Elite Video Production Portfolio</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @layer base {
+            body {
+                @apply bg-background text-on-background antialiased overflow-x-hidden;
+                font-family: 'Inter', sans-serif;
+            }
+        }
+
+        .glass-card {
+            background: var(--glass-fill-dark, rgba(20, 20, 22, 0.7));
+            backdrop-filter: blur(32px);
+            border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+            border-left: 0.5px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.5);
+        }
+
+        .magnetic-btn {
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, rgba(0, 102, 204, 0.1) 0%, transparent 70%);
+        }
+
+        .mask-fade-right {
+            mask-image: linear-gradient(to right, black 60%, transparent 100%);
+        }
+
+        .timeline-line {
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, #0066cc, transparent);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Lenis smooth scroll — prevent default overscroll bounce */
+        html.lenis,
+        html.lenis body {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#c6c6c8",
+                        "silver-matte": "#86868B",
+                        "surface-dim": "#131313",
+                        "tertiary-fixed-dim": "#ffb692",
+                        "on-tertiary-container": "#ffe3d6",
+                        "on-secondary": "#2f3132",
+                        "on-primary-container": "#dfe8ff",
+                        "glass-fill-light": "rgba(255, 255, 255, 0.7)",
+                        "error": "#ffb4ab",
+                        "background": "#131313",
+                        "on-surface": "#e2e2e2",
+                        "glass-fill-dark": "rgba(20, 20, 22, 0.7)",
+                        "surface-container": "#1f1f1f",
+                        "surface-container-highest": "#353535",
+                        "on-secondary-fixed-variant": "#454749",
+                        "on-background": "#e2e2e2",
+                        "tertiary-container": "#af4900",
+                        "on-tertiary-fixed": "#341100",
+                        "surface-bright": "#393939",
+                        "surface-container-low": "#1b1b1b",
+                        "on-primary-fixed": "#001b3e",
+                        "on-secondary-container": "#b4b5b7",
+                        "on-primary": "#002f65",
+                        "inverse-primary": "#005cba",
+                        "secondary-fixed": "#e2e2e4",
+                        "error-container": "#93000a",
+                        "primary-fixed-dim": "#aac7ff",
+                        "on-error": "#690005",
+                        "primary-container": "#0066cc",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-fixed": "#d7e3ff",
+                        "inverse-on-surface": "#303030",
+                        "on-secondary-fixed": "#1a1c1d",
+                        "tertiary-fixed": "#ffdbcb",
+                        "outline-variant": "#414753",
+                        "tertiary": "#ffb692",
+                        "on-error-container": "#ffdad6",
+                        "obsidian": "#0A0A0B",
+                        "on-tertiary": "#562000",
+                        "surface-variant": "#353535",
+                        "on-tertiary-fixed-variant": "#793000",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface": "#131313",
+                        "outline": "#8b919e",
+                        "on-surface-variant": "#c1c6d5",
+                        "inverse-surface": "#e2e2e2",
+                        "on-primary-fixed-variant": "#00458e",
+                        "secondary-fixed-dim": "#c6c6c8",
+                        "primary": "#aac7ff",
+                        "secondary-container": "#454749",
+                        "surface-tint": "#aac7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "container-max": "1440px",
+                        "margin-desktop": "80px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-xl-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-xl": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+                        "body-md": ["17px", { "lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "headline-lg": ["40px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "display-xl-mobile": ["44px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "700" }],
+                        "body-lg": ["20px", { "lineHeight": "1.5", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "display-xl": ["72px", { "lineHeight": "1.05", "letterSpacing": "-0.04em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-background text-on-background selection:bg-primary/30">
+
+    <!-- TopNavBar -->
+    <header
+        class="fixed top-0 w-full z-50 bg-glass-fill-dark backdrop-blur-md border-b border-white/10 shadow-2xl shadow-obsidian/50">
+        <div class="max-w-container-max mx-auto px-margin-desktop flex justify-between items-center h-20">
+            <span
+                class="font-display-xl-mobile text-display-xl-mobile font-bold tracking-tighter text-on-surface">Sanjeeth
+                Kumar</span>
+            <nav class="hidden md:flex items-center gap-10">
+                <a class="nav-link text-primary font-semibold font-body-md text-body-md hover:text-primary transition-all duration-300 ease-in-out"
+                    href="#work">Work</a>
+                <a class="nav-link text-silver-matte font-body-md text-body-md hover:text-primary transition-all duration-300 ease-in-out"
+                    href="#services">Services</a>
+                <a class="nav-link text-silver-matte font-body-md text-body-md hover:text-primary transition-all duration-300 ease-in-out"
+                    href="#about">About</a>
+                <a class="nav-link text-silver-matte font-body-md text-body-md hover:text-primary transition-all duration-300 ease-in-out"
+                    href="#process">Process</a>
+            </nav>
+
+        </div>
+    </header>
+
+    <main>
+        <!-- Section 1: Hero -->
+        <section class="relative min-h-screen flex items-center overflow-hidden" id="hero">
+            <!-- Shader Background -->
+            <div class="absolute inset-0 w-full h-full opacity-40" style="display:block;">
+                <canvas id="shader-canvas" style="display:block;width:100%;height:100%"></canvas>
+            </div>
+
+            <div
+                class="max-w-container-max mx-auto px-margin-desktop w-full grid grid-cols-12 gap-gutter relative z-10">
+                <div class="col-span-12 lg:col-span-7 flex flex-col justify-center reveal">
+                    <span class="font-label-caps text-label-caps text-primary tracking-widest uppercase mb-6">Brand
+                        Visionary</span>
+                    <h1 class="font-display-xl text-display-xl text-on-surface mb-8 leading-none">
+                        I Create Stories That <span class="text-primary-fixed-dim italic">Capture</span> Attention.
+                    </h1>
+                    <p class="font-body-lg text-body-lg text-silver-matte max-w-xl">
+                        Content Creator &bull; Video Editor &bull; Motion Designer. Specialized in crafting
+                        high-conversion visual narratives for elite brands and top-tier creators.
+                    </p>
+                </div>
+                <div class="hidden lg:block col-span-5 relative reveal" data-delay="0.2">
+                    <div class="relative w-full aspect-[3/4] overflow-hidden rounded-xl">
+                        <img alt="Creator Portrait"
+                            class="w-full h-full object-cover grayscale brightness-90 hover:grayscale-0 transition-all duration-700 ease-in-out"
+                            src="sanjeeth-portrait.png" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: About -->
+        <section class="py-40 bg-surface-container-lowest" id="about">
+            <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-12 gap-16 items-center">
+                <div class="col-span-12 lg:col-span-5 reveal">
+                    <div class="relative rounded-2xl overflow-hidden glass-card p-2">
+                        <img alt="Creative Work Collage" class="w-full h-full object-cover rounded-xl opacity-80"
+                            src="work-collage.jpeg" />
+                    </div>
+                </div>
+                <div class="col-span-12 lg:col-span-7 reveal" data-delay="0.2">
+                    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-10">Creative Philosophy</h2>
+                    <div class="space-y-6">
+                        <p class="font-body-lg text-body-lg text-silver-matte">
+                            In an era of endless scrolling, I believe in the power of the first three seconds. My
+                            approach blends cinematic pacing with psychological engagement, ensuring every frame serves
+                            a purpose in the larger narrative.
+                        </p>
+                        <p class="font-body-lg text-body-lg text-silver-matte">
+                            From high-octane commercial edits to intimate documentary storytelling, I utilize
+                            industry-leading tools like DaVinci Resolve and After Effects to bring a distinctive,
+                            premium polish to every production.
+                        </p>
+                        <div class="pt-8 flex gap-12">
+                            <div>
+                                <span
+                                    class="block font-display-xl-mobile text-display-xl-mobile font-bold text-primary">3+</span>
+                                <span class="font-label-caps text-label-caps text-silver-matte">Years Experience</span>
+                            </div>
+                            <div>
+                                <span
+                                    class="block font-display-xl-mobile text-display-xl-mobile font-bold text-primary">6+</span>
+                                <span class="font-label-caps text-label-caps text-silver-matte">Projects Edited</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Services -->
+        <section class="py-40" id="services">
+            <div class="max-w-container-max mx-auto px-margin-desktop">
+                <div class="mb-20 reveal">
+                    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Core Expertise</h2>
+                    <p class="font-body-md text-body-md text-silver-matte max-w-md">Precision-engineered visual services
+                        for the modern digital landscape.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+                    <div
+                        class="glass-card p-10 rounded-2xl reveal group hover:border-primary/50 transition-colors duration-500">
+                        <span class="material-symbols-outlined text-4xl text-primary mb-8">movie_edit</span>
+                        <h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Premium Video Editing</h3>
+                        <p class="font-body-md text-body-md text-silver-matte">Professional assembly, pacing, and color
+                            grading for high-end cinematic content.</p>
+                    </div>
+                    <div class="glass-card p-10 rounded-2xl reveal group hover:border-primary/50 transition-colors duration-500"
+                        data-delay="0.1">
+                        <span class="material-symbols-outlined text-4xl text-primary mb-8">auto_awesome</span>
+                        <h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Motion Graphics</h3>
+                        <p class="font-body-md text-body-md text-silver-matte">Dynamic typography and visual effects
+                            that breathe life into static concepts.</p>
+                    </div>
+                    <div class="glass-card p-10 rounded-2xl reveal group hover:border-primary/50 transition-colors duration-500"
+                        data-delay="0.2">
+                        <span class="material-symbols-outlined text-4xl text-primary mb-8">smartphone</span>
+                        <h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Short-Form Content</h3>
+                        <p class="font-body-md text-body-md text-silver-matte">Viral-ready Reels and TikToks optimized
+                            for maximum platform retention.</p>
+                    </div>
+                    <div class="glass-card p-10 rounded-2xl reveal group hover:border-primary/50 transition-colors duration-500"
+                        data-delay="0.3">
+                        <span class="material-symbols-outlined text-4xl text-primary mb-8">palette</span>
+                        <h3 class="font-body-lg text-body-lg font-bold text-on-surface mb-4">Visual Direction</h3>
+                        <p class="font-body-md text-body-md text-silver-matte">End-to-end creative guidance from
+                            conceptualization to final export.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Portfolio -->
+        <section class="py-40 bg-surface-container-lowest" id="work">
+            <div class="max-w-container-max mx-auto px-margin-desktop">
+                <div class="flex justify-between items-end mb-20 reveal">
+                    <div>
+                        <h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Selected Work</h2>
+                        <p class="font-body-md text-body-md text-silver-matte">A gallery of cinematic excellence.</p>
+                    </div>
+                    <div class="hidden md:flex gap-4">
+                        <button
+                            class="font-label-caps text-label-caps text-on-surface border border-white/10 px-6 py-2 rounded-full hover:bg-white/10 transition-colors">Campaigns</button>
+                        <button
+                            class="font-label-caps text-label-caps text-silver-matte hover:text-on-surface px-6 py-2 transition-colors"></button>
+                        <button
+                            class="font-label-caps text-label-caps text-silver-matte hover:text-on-surface px-6 py-2 transition-colors"></button>
+                    </div>
+                </div>
+                <!-- Lightbox Modal -->
+                <div id="lightbox"
+                    class="fixed inset-0 z-[200] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300"
+                    style="background: rgba(10,10,11,0.92); backdrop-filter: blur(20px);">
+                    <button id="lb-close"
+                        class="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-all duration-200 hover:scale-110 z-10">
+                        <span class="material-symbols-outlined text-2xl">close</span>
+                    </button>
+                    <button id="lb-prev"
+                        class="absolute left-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-all duration-200 hover:scale-110 z-10">
+                        <span class="material-symbols-outlined text-2xl">chevron_left</span>
+                    </button>
+                    <div class="relative flex flex-col items-center max-w-4xl w-full px-24">
+                        <img id="lb-img" src="" alt=""
+                            class="max-h-[80vh] max-w-full object-contain rounded-2xl shadow-2xl transition-opacity duration-200" />
+                        <div class="mt-6 text-center">
+                            <span id="lb-category"
+                                class="font-label-caps text-label-caps text-primary tracking-widest uppercase block mb-1"></span>
+                            <h3 id="lb-title" class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">
+                            </h3>
+                        </div>
+                        <div class="flex gap-2 mt-6" id="lb-dots"></div>
+                    </div>
+                    <button id="lb-next"
+                        class="absolute right-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-all duration-200 hover:scale-110 z-10">
+                        <span class="material-symbols-outlined text-2xl">chevron_right</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-12 gap-gutter">
+                    <!-- Card 1 -->
+                    <div class="col-span-12 lg:col-span-8 group relative rounded-2xl overflow-hidden glass-card reveal portfolio-card cursor-pointer"
+                        data-src="portfolio-aalam-care.jpeg" data-title="Care Crafted With Respect"
+                        data-category="Featured Campaign" data-index="0">
+                        <div class="aspect-square relative overflow-hidden">
+                            <img class="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-1000 ease-out"
+                                alt="Aalam Senior Living - Care Crafted With Respect" src="portfolio-aalam-care.jpeg" />
+                            <div
+                                class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                                <div
+                                    class="w-20 h-20 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center text-on-primary shadow-2xl scale-90 group-hover:scale-100 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-4xl"
+                                        style="font-variation-settings:'FILL' 1;">zoom_in</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <span class="font-label-caps text-label-caps text-primary mb-2 block uppercase">Featured
+                                Campaign</span>
+                            <h3 class="font-headline-lg text-headline-lg text-on-surface">Care Crafted With Respect</h3>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="col-span-12 lg:col-span-4 group relative rounded-2xl overflow-hidden glass-card reveal portfolio-card cursor-pointer"
+                        data-delay="0.1" data-src="portfolio-aalam-vital.jpeg" data-title="Care That Never Sleeps"
+                        data-category="Social Campaign" data-index="1">
+                        <div class="aspect-square relative overflow-hidden">
+                            <img class="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-1000 ease-out"
+                                alt="Aalam Senior Living - Care That Never Sleeps" src="portfolio-aalam-vital.jpeg" />
+                            <div
+                                class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                                <div
+                                    class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white scale-90 group-hover:scale-100 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-3xl"
+                                        style="font-variation-settings:'FILL' 1;">zoom_in</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <span class="font-label-caps text-label-caps text-silver-matte mb-2 block uppercase">Social
+                                Campaign</span>
+                            <h3 class="font-body-lg text-body-lg font-bold text-on-surface">Care That Never Sleeps</h3>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="col-span-12 lg:col-span-4 group relative rounded-2xl overflow-hidden glass-card reveal portfolio-card cursor-pointer"
+                        data-src="portfolio-aalam-retirement.jpeg" data-title="Housewife Retirement"
+                        data-category="Vernacular Ad" data-index="2">
+                        <div class="aspect-square relative overflow-hidden">
+                            <img class="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-1000 ease-out"
+                                alt="Aalam Senior Living - Retirement for Housewives"
+                                src="portfolio-aalam-retirement.jpeg" />
+                            <div
+                                class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                                <div
+                                    class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white scale-90 group-hover:scale-100 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-3xl"
+                                        style="font-variation-settings:'FILL' 1;">zoom_in</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <span
+                                class="font-label-caps text-label-caps text-silver-matte mb-2 block uppercase">Vernacular
+                                Ad</span>
+                            <h3 class="font-body-lg text-body-lg font-bold text-on-surface">Housewife Retirement</h3>
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="col-span-12 lg:col-span-8 group relative rounded-2xl overflow-hidden glass-card reveal portfolio-card cursor-pointer"
+                        data-delay="0.1" data-src="portfolio-aalam-booking.jpeg" data-title="Booking Launch Offer"
+                        data-category="Promo Campaign" data-index="3">
+                        <div class="aspect-square relative overflow-hidden">
+                            <img class="w-full h-full object-cover scale-100 group-hover:scale-105 transition-transform duration-1000 ease-out"
+                                alt="Aalam Senior Living - Free Gold Offer" src="portfolio-aalam-booking.jpeg" />
+                            <div
+                                class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                                <div
+                                    class="w-20 h-20 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center text-on-primary shadow-2xl scale-90 group-hover:scale-100 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-4xl"
+                                        style="font-variation-settings:'FILL' 1;">zoom_in</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <span class="font-label-caps text-label-caps text-silver-matte mb-2 block uppercase">Promo
+                                Campaign</span>
+                            <h3 class="font-body-lg text-body-lg font-bold text-on-surface">Booking Launch Offer</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Experience Timeline -->
+        <section class="py-40" id="experience">
+            <div class="max-w-container-max mx-auto px-margin-desktop">
+                <div class="max-w-2xl mx-auto mb-20 text-center reveal">
+                    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">The Journey</h2>
+                    <p class="font-body-md text-body-md text-silver-matte">A track record of visual storytelling across
+                        agencies and global brands.</p>
+                </div>
+                <div class="relative max-w-4xl mx-auto">
+                    <div class="absolute left-1/2 -translate-x-1/2 h-full timeline-line"></div>
+                    <div class="space-y-24">
+                        <div class="relative flex items-center justify-between w-full reveal">
+                            <div class="w-[45%] text-right pr-12">
+                                <span class="font-label-caps text-label-caps text-primary mb-2 block">2026 -
+                                    Present</span>
+                                <h3 class="font-body-lg text-body-lg font-bold text-on-surface">Digital Marketing
+                                    Executive</h3>
+                                <p class="font-body-md text-body-md text-silver-matte mt-2">AutoWelikn & CatchMechanic
+                                </p>
+                            </div>
+                            <div
+                                class="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary border-4 border-background z-10">
+                            </div>
+                            <div class="w-[45%] pl-12">
+                                <p class="font-body-md text-body-md text-silver-matte leading-relaxed">Handling Social
+                                    Media,
+                                    Video Editing, SEO, Voice Over & Content Creation</p>
+                            </div>
+                        </div>
+                        <div class="relative flex items-center justify-between w-full reveal" data-delay="0.1">
+                            <div class="w-[45%] pr-12">
+                                <p class="font-body-md text-body-md text-silver-matte leading-relaxed text-right">
+                                    Edited ATL & BTL advertising campaigns, including TV commercials, digital ads, news
+                                    paper and physical branding content.</p>
+                            </div>
+                            <div
+                                class="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-silver-matte border-4 border-background z-10">
+                            </div>
+                            <div class="w-[45%] text-left pl-12">
+                                <span class="font-label-caps text-label-caps text-primary mb-2 block">2025 - 2026</span>
+                                <h3 class="font-body-lg text-body-lg font-bold text-on-surface">Junior Marketing Head &
+                                    Graphic
+                                    Designer</h3>
+                                <p class="font-body-md text-body-md text-silver-matte mt-2">Aalam Senior Living</p>
+                            </div>
+                        </div>
+                        <div class="relative flex items-center justify-between w-full reveal" data-delay="0.2">
+                            <div class="w-[45%] text-right pr-12">
+                                <span class="font-label-caps text-label-caps text-primary mb-2 block">2023 - 2024</span>
+                                <h3 class="font-body-lg text-body-lg font-bold text-on-surface">Video Editor</h3>
+                                <p class="font-body-md text-body-md text-silver-matte mt-2">One Space Graphic Designs
+                                </p>
+                            </div>
+                            <div
+                                class="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-silver-matte border-4 border-background z-10">
+                            </div>
+                            <div class="w-[45%] pl-12">
+                                <p class="font-body-md text-body-md text-silver-matte leading-relaxed">Created
+                                    high-impact short-form content optimized for Instagram Reels</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Skills -->
+        <section class="py-40 bg-surface-container-lowest" id="skills">
+            <div
+                class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-gutter reveal">
+                <div class="flex flex-col items-center">
+                    <div
+                        class="w-24 h-24 rounded-full border-2 border-primary-container flex items-center justify-center mb-6 relative">
+                        <div
+                            class="absolute inset-0 rounded-full border-2 border-primary border-t-transparent animate-spin duration-[3s]">
+                        </div>
+                        <span class="font-label-caps text-label-caps text-on-surface">Pr</span>
+                    </div>
+                    <span class="font-label-caps text-label-caps text-silver-matte uppercase">Premiere Pro</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div
+                        class="w-24 h-24 rounded-full border-2 border-primary-container flex items-center justify-center mb-6">
+                        <span class="font-label-caps text-label-caps text-on-surface">Ae</span>
+                    </div>
+                    <span class="font-label-caps text-label-caps text-silver-matte uppercase">After Effects</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div
+                        class="w-24 h-24 rounded-full border-2 border-primary-container flex items-center justify-center mb-6">
+                        <span class="font-label-caps text-label-caps text-on-surface">Dv</span>
+                    </div>
+                    <span class="font-label-caps text-label-caps text-silver-matte uppercase">Resolve</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div
+                        class="w-24 h-24 rounded-full border-2 border-primary-container flex items-center justify-center mb-6">
+                        <span class="font-label-caps text-label-caps text-on-surface">Ps</span>
+                    </div>
+                    <span class="font-label-caps text-label-caps text-silver-matte uppercase">Photoshop</span>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <div
+                        class="w-24 h-24 rounded-full border-2 border-primary-container flex items-center justify-center mb-6">
+                        <span class="font-label-caps text-label-caps text-on-surface">Ai</span>
+                    </div>
+                    <span class="font-label-caps text-label-caps text-silver-matte uppercase">Illustrator</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Behind the Scenes -->
+        <section class="py-40" id="bts">
+            <div class="max-w-container-max mx-auto px-margin-desktop">
+                <div class="mb-20 reveal">
+                    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Behind The Lens</h2>
+                    <p class="font-body-md text-body-md text-silver-matte max-w-md">The environment where creative magic
+                        happens.</p>
+                </div>
+                <div class="relative overflow-hidden rounded-3xl glass-card reveal" style="height: 600px;">
+                    <img alt="Studio Setup"
+                        class="w-full h-full object-cover grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-1000 ease-in-out"
+                        src="bts-studio.png" />
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent flex flex-col justify-end p-12 pointer-events-none">
+                        <div class="max-w-xl">
+                            <span
+                                class="font-label-caps text-label-caps text-primary tracking-widest uppercase mb-4 block">The
+                                Command Center</span>
+                            <h3 class="font-headline-lg text-headline-lg text-on-surface">Built for performance. Curated
+                                for inspiration.</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Footer -->
+        <footer class="w-full py-20 bg-obsidian border-t border-surface-container-highest">
+            <div
+                class="max-w-container-max mx-auto px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter">
+                <div class="mb-10 md:mb-0">
+                    <span class="font-body-lg text-body-lg font-bold text-on-surface block mb-2">Sanjeeth Kumar</span>
+                    <p class="font-label-caps text-label-caps text-silver-matte">&copy; 2024 Creator Studio. Designed
+                        for
+                        Cinema.</p>
+                </div>
+                <div class="flex gap-12">
+                    <a class="font-label-caps text-label-caps text-silver-matte hover:text-primary transition-colors duration-300"
+                        href="https://www.instagram.com/s_a_n_j_e_e_t_h_24?igsh=MTF5ZW1nNmZvMmxoaw==">Instagram</a>
+                    <a class="font-label-caps text-label-caps text-silver-matte hover:text-primary transition-colors duration-300"
+                        href="https://www.linkedin.com/in/sanjeeth-kumar-s-n">LinkedIn</a>
+                    <a class="font-label-caps text-label-caps text-silver-matte hover:text-primary transition-colors duration-300"
+                        href="mailto:2023sanjeeth@gmail.com">Email</a>
+                </div>
+                <button id="scroll-top-btn"
+                    class="material-symbols-outlined text-silver-matte hover:text-primary transition-colors cursor-pointer">arrow_upward</button>
+            </div>
+        </footer>
+
+        <!-- Lightbox Script -->
+        <script>
+                (function () {
+                    var portfolio = [
+                        { src: 'portfolio-aalam-care.jpeg', title: 'Care Crafted With Respect', category: 'Featured Campaign' },
+                        { src: 'portfolio-aalam-vital.jpeg', title: 'Care That Never Sleeps', category: 'Social Campaign' },
+                        { src: 'portfolio-aalam-retirement.jpeg', title: 'Housewife Retirement', category: 'Vernacular Ad' },
+                        { src: 'portfolio-aalam-booking.jpeg', title: 'Booking Launch Offer', category: 'Promo Campaign' }
+                    ];
+
+                    var lb = document.getElementById('lightbox');
+                    var lbImg = document.getElementById('lb-img');
+                    var lbTitle = document.getElementById('lb-title');
+                    var lbCat = document.getElementById('lb-category');
+                    var lbDots = document.getElementById('lb-dots');
+                    var current = 0;
+
+                    // Build dots
+                    portfolio.forEach(function (_, i) {
+                        var d = document.createElement('button');
+                        d.className = 'w-2 h-2 rounded-full transition-all duration-300 ' + (i === 0 ? 'bg-primary w-6' : 'bg-white/30');
+                        d.addEventListener('click', function () { openAt(i); });
+                        lbDots.appendChild(d);
+                    });
+
+                    function updateDots() {
+                        Array.from(lbDots.children).forEach(function (d, i) {
+                            d.className = 'rounded-full transition-all duration-300 h-2 ' + (i === current ? 'bg-primary w-6' : 'bg-white/30 w-2');
+                        });
+                    }
+
+                    function openAt(index) {
+                        current = (index + portfolio.length) % portfolio.length;
+                        var item = portfolio[current];
+                        lbImg.style.opacity = '0';
+                        setTimeout(function () {
+                            lbImg.src = item.src;
+                            lbImg.alt = item.title;
+                            lbTitle.textContent = item.title;
+                            lbCat.textContent = item.category;
+                            lbImg.style.opacity = '1';
+                        }, 150);
+                        updateDots();
+                        lb.style.opacity = '1';
+                        lb.style.pointerEvents = 'auto';
+                        document.body.style.overflow = 'hidden';
+                    }
+
+                    function closeLightbox() {
+                        lb.style.opacity = '0';
+                        lb.style.pointerEvents = 'none';
+                        document.body.style.overflow = '';
+                    }
+
+                    // Open on card click
+                    document.querySelectorAll('.portfolio-card').forEach(function (card) {
+                        card.addEventListener('click', function () {
+                            openAt(parseInt(this.getAttribute('data-index')));
+                        });
+                    });
+
+                    // Controls
+                    document.getElementById('lb-close').addEventListener('click', closeLightbox);
+                    document.getElementById('lb-prev').addEventListener('click', function () { openAt(current - 1); });
+                    document.getElementById('lb-next').addEventListener('click', function () { openAt(current + 1); });
+
+                    // Close on backdrop
+                    lb.addEventListener('click', function (e) {
+                        if (e.target === lb) closeLightbox();
+                    });
+
+                    // Keyboard navigation
+                    document.addEventListener('keydown', function (e) {
+                        if (lb.style.pointerEvents !== 'auto') return;
+                        if (e.key === 'Escape') closeLightbox();
+                        if (e.key === 'ArrowRight') openAt(current + 1);
+                        if (e.key === 'ArrowLeft') openAt(current - 1);
+                    });
+                })();
+        </script>
+
+        <!-- Toast notification -->
+        <div id="toast"
+            class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] bg-primary-container text-on-primary-container px-8 py-4 rounded-xl font-label-caps text-label-caps uppercase shadow-2xl shadow-primary/20 opacity-0 translate-y-4 pointer-events-none transition-all duration-500 ease-out">
+            Inquiry Sent Successfully
+        </div>
+
+        <!-- WebGL Shader -->
+        <script>
+            (function () {
+                const canvas = document.getElementById('shader-canvas');
+                if (!canvas) return;
+
+                function syncSize() {
+                    const w = canvas.clientWidth || 1280;
+                    const h = canvas.clientHeight || 720;
+                    if (canvas.width !== w || canvas.height !== h) {
+                        canvas.width = w;
+                        canvas.height = h;
+                    }
+                }
+                if (typeof ResizeObserver !== 'undefined') {
+                    new ResizeObserver(syncSize).observe(canvas);
+                }
+                syncSize();
+
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                if (!gl) return;
+
+                const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+    v_texCoord = a_position * 0.5 + 0.5;
+    gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+
+                const fs = `precision highp float;
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+varying vec2 v_texCoord;
+
+void main() {
+    vec2 uv = v_texCoord;
+    vec2 mouse = u_mouse / u_resolution;
+
+    float dist = distance(uv, vec2(0.5 + sin(u_time * 0.5) * 0.2, 0.5 + cos(u_time * 0.3) * 0.2));
+    float dist2 = distance(uv, vec2(0.5 + cos(u_time * 0.4) * 0.3, 0.5 + sin(u_time * 0.6) * 0.1));
+    float mouseDist = distance(uv, mouse);
+
+    float glow = 0.05 / (dist + 0.1);
+    float glow2 = 0.04 / (dist2 + 0.1);
+    float mouseGlow = 0.02 / (mouseDist + 0.05);
+
+    vec3 color1 = vec3(0.0, 0.4, 0.8);
+    vec3 color2 = vec3(0.3, 0.0, 0.6);
+    vec3 color3 = vec3(0.1, 0.1, 0.1);
+
+    vec3 finalColor = mix(color3, color1, glow);
+    finalColor += color2 * glow2;
+    finalColor += vec3(0.2, 0.4, 0.6) * mouseGlow;
+
+    gl_FragColor = vec4(finalColor, 1.0);
+}`;
+
+                function cs(type, src) {
+                    const s = gl.createShader(type);
+                    gl.shaderSource(s, src);
+                    gl.compileShader(s);
+                    return s;
+                }
+
+                const prog = gl.createProgram();
+                gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+                gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+                gl.linkProgram(prog);
+                gl.useProgram(prog);
+
+                const buf = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+
+                const pos = gl.getAttribLocation(prog, 'a_position');
+                gl.enableVertexAttribArray(pos);
+                gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+
+                const uTime = gl.getUniformLocation(prog, 'u_time');
+                const uRes = gl.getUniformLocation(prog, 'u_resolution');
+                const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+                let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+                window.addEventListener('mousemove', function (event) {
+                    const rect = canvas.getBoundingClientRect();
+                    if (rect.width && rect.height) {
+                        const nx = (event.clientX - rect.left) / rect.width;
+                        const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+                        mouse.x = nx * canvas.width;
+                        mouse.y = ny * canvas.height;
+                    }
+                });
+
+                function render(t) {
+                    if (typeof ResizeObserver === 'undefined') syncSize();
+                    gl.viewport(0, 0, canvas.width, canvas.height);
+                    if (uTime) gl.uniform1f(uTime, t * 0.001);
+                    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+                    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+                    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                    requestAnimationFrame(render);
+                }
+                render(0);
+            })();
+        </script>
+
+        <!-- Lenis Smooth Scroll + GSAP Integration -->
+        <script>
+            (function () {
+                // Initialize Lenis smooth scroll
+                const lenis = new Lenis({
+                    duration: 1.2,
+                    easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+                    orientation: 'vertical',
+                    gestureOrientation: 'vertical',
+                    smoothWheel: true,
+                    wheelMultiplier: 1,
+                    touchMultiplier: 2
+                });
+
+                // Connect Lenis to GSAP ScrollTrigger
+                gsap.registerPlugin(ScrollTrigger);
+
+                lenis.on('scroll', ScrollTrigger.update);
+
+                gsap.ticker.add(function (time) {
+                    lenis.raf(time * 1000);
+                });
+
+                gsap.ticker.lagSmoothing(0);
+
+                // Nav link smooth scrolling via Lenis
+                document.querySelectorAll('.nav-link').forEach(function (link) {
+                    link.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        var target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            lenis.scrollTo(target, { offset: -80 });
+                        }
+                    });
+                });
+
+                // Contact button scroll to contact section
+                document.querySelector('header button').addEventListener('click', function () {
+                    var contact = document.getElementById('contact');
+                    if (contact) lenis.scrollTo(contact, { offset: -80 });
+                });
+
+                // Scroll to top via Lenis
+                document.getElementById('scroll-top-btn').addEventListener('click', function () {
+                    lenis.scrollTo(0);
+                });
+
+                // GSAP ScrollTrigger reveal animations
+                document.querySelectorAll('.reveal').forEach(function (el) {
+                    var delay = el.getAttribute('data-delay') || 0;
+                    gsap.from(el, {
+                        scrollTrigger: {
+                            trigger: el,
+                            start: 'top 85%',
+                            toggleActions: 'play none none none'
+                        },
+                        y: 60,
+                        opacity: 0,
+                        duration: 1.2,
+                        delay: parseFloat(delay),
+                        ease: 'expo.out'
+                    });
+                });
+
+                // Magnetic Button Effect
+                document.querySelectorAll('.magnetic-btn').forEach(function (btn) {
+                    btn.addEventListener('mousemove', function (e) {
+                        var rect = btn.getBoundingClientRect();
+                        var x = e.clientX - rect.left - rect.width / 2;
+                        var y = e.clientY - rect.top - rect.height / 2;
+                        btn.style.transform = 'translate(' + (x * 0.3) + 'px, ' + (y * 0.3) + 'px)';
+                    });
+                    btn.addEventListener('mouseleave', function () {
+                        btn.style.transform = 'translate(0px, 0px)';
+                    });
+                });
+
+                // Infinite testimonial scroll
+                var scrollTrack = document.querySelector('.animate-scroll');
+                if (scrollTrack) {
+                    var clone = scrollTrack.innerHTML;
+                    scrollTrack.innerHTML += clone;
+                    gsap.to(scrollTrack, {
+                        x: '-50%',
+                        duration: 40,
+                        repeat: -1,
+                        ease: 'linear'
+                    });
+                }
+
+                // Toast notification helper
+                window.showToast = function () {
+                    var toast = document.getElementById('toast');
+                    toast.style.opacity = '1';
+                    toast.style.transform = 'translate(-50%, 0)';
+                    toast.style.pointerEvents = 'auto';
+                    setTimeout(function () {
+                        toast.style.opacity = '0';
+                        toast.style.transform = 'translate(-50%, 1rem)';
+                        toast.style.pointerEvents = 'none';
+                    }, 3000);
+                };
+            })();
+        </script>
+</body>
+
+</html>
