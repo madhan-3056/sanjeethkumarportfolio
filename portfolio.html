@@ -168,6 +168,33 @@
             }
         }
     </script>
+
+    <!-- Mobile responsive overrides (guaranteed, no Tailwind dependency) -->
+    <style>
+        /* Hero section: portrait above text on mobile */
+        @media (max-width: 1023px) {
+            #hero-grid {
+                display: flex !important;
+                flex-direction: column !important;
+            }
+            #hero-portrait {
+                order: 1 !important;
+                width: 100% !important;
+                display: flex !important;
+                justify-content: center !important;
+                padding-top: 96px;
+            }
+            #hero-portrait .portrait-inner {
+                width: min(280px, 80vw) !important;
+                aspect-ratio: 3/4 !important;
+            }
+            #hero-text {
+                order: 2 !important;
+                width: 100% !important;
+                padding-bottom: 48px;
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-background text-on-background selection:bg-primary/30">
@@ -201,9 +228,9 @@
                 <canvas id="shader-canvas" style="display:block;width:100%;height:100%"></canvas>
             </div>
 
-            <div
+            <div id="hero-grid"
                 class="max-w-container-max mx-auto px-margin-desktop w-full grid grid-cols-12 gap-gutter relative z-10 py-20 lg:py-0">
-                <div class="col-span-12 lg:col-span-7 flex flex-col justify-center reveal order-2 lg:order-1">
+                <div id="hero-text" class="col-span-12 lg:col-span-7 flex flex-col justify-center reveal order-2 lg:order-1">
                     <span class="font-label-caps text-label-caps text-primary tracking-widest uppercase mb-6">Brand
                         Visionary</span>
                     <h1 class="font-display-xl text-display-xl text-on-surface mb-8 leading-none">
@@ -214,8 +241,8 @@
                         high-conversion visual narratives for elite brands and top-tier creators.
                     </p>
                 </div>
-                <div class="col-span-12 lg:col-span-5 relative reveal order-1 lg:order-2" data-delay="0.2">
-                    <div class="relative w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-[3/4] overflow-hidden rounded-xl mx-auto max-w-xs sm:max-w-sm lg:max-w-none">
+                <div id="hero-portrait" class="col-span-12 lg:col-span-5 relative reveal order-1 lg:order-2" data-delay="0.2">
+                    <div class="portrait-inner relative w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-[3/4] overflow-hidden rounded-xl mx-auto max-w-xs sm:max-w-sm lg:max-w-none">
                         <img alt="Sanjeeth Kumar - Creator Portrait"
                             class="w-full h-full object-cover grayscale brightness-90 hover:grayscale-0 transition-all duration-700 ease-in-out"
                             src="sanjeeth-portrait.png" />
